@@ -9,7 +9,7 @@ const props = defineProps({
   },
   text: {
     type: String,
-    required: true
+    required: false
   },
   buttons: {
     type: Array as () => any[],
@@ -25,7 +25,11 @@ const props = defineProps({
   cardOptions: {
     type: Object,
     default: () => ({})
-  }
+  },
+  textHTML: {
+    type: String,
+    default: ''
+  },
 })
 
 // ------- EVENTS -------
@@ -69,7 +73,8 @@ function close(buttonKey: string | boolean){
 <template>
   <VCard class="vuetify3-dialog-card" v-bind="cardOptions">
     <VCardTitle class="d-flex align-center"><VIcon :color="_color" class="mr-2">{{_icon}}</VIcon>{{title}}</VCardTitle>
-    <VCardText>{{text}}</VCardText>
+    <VCardText v-html="textHTML" v-if="textHTML"></VCardText>
+    <VCardText v-else>{{text}}</VCardText>
     <VCardActions>
       <VBtn
         v-for="button in _buttons"

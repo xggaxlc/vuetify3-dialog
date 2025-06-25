@@ -35,7 +35,11 @@ const props = defineProps({
   customComponent: {
     type: Object as PropType<ComponentOptions>,
     required: false
-  }
+  },
+  textHTML: {
+    type: String,
+    default: ''
+  },
 })
 
 // ------- EVENTS -------
@@ -73,6 +77,7 @@ watch((showDialog), (newValue) => {
       v-bind="cardOptions"
       :title="title"
       :text="text"
+      :textHTML="textHTML"
       :buttons="buttons"
       :icon="icon"
       :level="level"

@@ -22,10 +22,12 @@ export function createDialog(options: CreateDialogOptions) {
 
     if (!options.customComponent) {
       if (!isNotEmptyAndNotNull(options.title)) throw new Error('title is required');
-      if (!isNotEmptyAndNotNull(options.text)) throw new Error('text is required');
+      if (!isNotEmptyAndNotNull(options.text) && !isNotEmptyAndNotNull(options.textHTML))
+        throw new Error('text is required');
     } else {
       options.title = options.title ?? '';
       options.text = options.text ?? '';
+      options.textHTML = options.textHTML ?? '';
     }
 
     if (options.buttons) {
@@ -36,6 +38,7 @@ export function createDialog(options: CreateDialogOptions) {
       const props = {
         title: options.title,
         text: options.text,
+        textHTML: options.textHTML,
         buttons: options.buttons,
         icon: options.icon,
         level: options.level,
@@ -63,6 +66,7 @@ export function warningDialog(options: BasicDialogOptions) {
   return createDialog({
     title: options.title ?? 'Warning',
     text: options.text,
+    textHTML: options.textHTML,
     icon: options.icon,
     buttons: [{ key: 'ok', title: 'OK', color: 'warning', ...options.buttonOptions }],
     level: 'warning',
@@ -74,6 +78,7 @@ export function errorDialog(options: BasicDialogOptions) {
   return createDialog({
     title: options.title ?? 'Error',
     text: options.text,
+    textHTML: options.textHTML,
     icon: options.icon,
     buttons: [{ key: 'ok', title: 'OK', color: 'error', ...options.buttonOptions }],
     level: 'error',
@@ -85,6 +90,7 @@ export function infoDialog(options: BasicDialogOptions) {
   return createDialog({
     title: options.title ?? 'Info',
     text: options.text,
+    textHTML: options.textHTML,
     icon: options.icon,
     buttons: [{ key: 'ok', title: 'OK', color: 'info', ...options.buttonOptions }],
     level: 'info',
@@ -96,6 +102,7 @@ export function successDialog(options: BasicDialogOptions) {
   return createDialog({
     title: options.title ?? 'Success',
     text: options.text,
+    textHTML: options.textHTML,
     icon: options.icon,
     buttons: [{ key: 'ok', title: 'OK', color: 'success', ...options.buttonOptions }],
     level: 'success',
@@ -107,6 +114,7 @@ export function confirmDialog(options: ConfirmDialogOptions) {
   return createDialog({
     title: options.title,
     text: options.text,
+    textHTML: options.textHTML,
     buttons: [
       { key: false, title: options.cancelText ?? 'Cancel', color: 'grey', ...options.cancelButtonOptions },
       {
@@ -136,7 +144,7 @@ function validateButton(button: any, index: number) {
   }
 }
 
-function isNotEmptyAndNotNull(value: string | boolean): boolean {
+function isNotEmptyAndNotNull(value?: string | boolean): boolean {
   if (value === undefined || value === null) return false;
   return typeof value === 'boolean' ? true : value.trim().length > 0 && value !== '';
 }
