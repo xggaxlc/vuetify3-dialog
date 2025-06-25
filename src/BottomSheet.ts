@@ -58,7 +58,7 @@ export function createBottomSheet(options: CreateBottomSheetOptions) {
   }
 }
 
-function isNotEmptyAndNotNull(value: string | boolean): boolean {
+function isNotEmptyAndNotNull(value?: string | boolean): boolean {
   if (value === undefined || value === null) return false;
   return typeof value === 'boolean' ? true : value.trim().length > 0 && value !== '';
 }
